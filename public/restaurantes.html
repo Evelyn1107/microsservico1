@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Restaurantes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Restaurantes Cadastrados</h1>
+  <div id="lista"></div>
+  <a href="restaurante.html">← Voltar</a>
+
+  <script>
+    fetch('/db/restaurants.json')
+      .then(res => res.json())
+      .then(rests => {
+        const div = document.getElementById('lista');
+        if (rests.length === 0) {
+          div.innerHTML = '<p>Nenhum restaurante cadastrado.</p>';
+          return;
+        }
+        rests.forEach(r => {
+          div.innerHTML += `<p><strong>${r.name}</strong> - ${r.email}</p>`;
+        });
+      })
+      .catch(err => {
+        console.error('Erro ao carregar restaurantes', err);
+        document.getElementById('lista').innerHTML = '<p>Erro ao carregar restaurantes.</p>';
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Cliente</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Cadastro de Cliente</h1>
+  <form id="userForm">
+    <input type="text" name="name" placeholder="Nome" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Senha" required>
+    <button type="submit">Cadastrar</button>
+  </form>
+  <a href="restaurante.html">Cadastrar Restaurante</a><br>
+  <a href="usuarios.html">Ver Usuários</a> | <a href="restaurantes.html">Ver Restaurantes</a>
+
+  <script>
+    const form = document.getElementById('userForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      const res = await fetch('/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      alert('Cliente cadastrado com sucesso: ' + result.name);
+      window.location.href = 'restaurante.html'; // redireciona
+    });
+  </script>
+</body>
+</html>

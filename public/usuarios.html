@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Usuários</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Usuários Cadastrados</h1>
+  <div id="lista"></div>
+  <a href="index.html">← Voltar</a>
+
+  <script>
+    fetch('/db/users.json')
+      .then(res => res.json())
+      .then(users => {
+        const div = document.getElementById('lista');
+        if (users.length === 0) {
+          div.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
+          return;
+        }
+        users.forEach(u => {
+          div.innerHTML += `<p><strong>${u.name}</strong> - ${u.email}</p>`;
+        });
+      })
+      .catch(err => {
+        console.error('Erro ao carregar usuários', err);
+        document.getElementById('lista').innerHTML = '<p>Erro ao carregar usuários.</p>';
+      });
+  </script>
+</body>
+</html>
